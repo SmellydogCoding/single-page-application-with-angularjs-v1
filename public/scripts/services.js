@@ -3,11 +3,9 @@
   angular.module('app')
   .service('dataService', function($http) {
     
-    this.getAll = function () {
+    this.getAll = function (callback) {
       $http.get('http://localhost:5000/api/recipes')
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
           console.log('something went wrong');
         });
