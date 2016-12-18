@@ -31,14 +31,12 @@
         });
     };
 
-    this.getCategory = function (category) {
+    this.getCategory = function(category,callback) {
       $http.get('http://localhost:5000/api/recipes?category=' + category)
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
           console.log('something went wrong');
-        });
+        }).catch(function(e) {console.log(e)});
     };
 
     this.getID = function (id) {
