@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('app')
-  .controller('RecipesController', function($scope,dataService) {
+  .controller('RecipesController', function($scope,dataService,$location) {
     
     const init = () => {
       dataService.getAll(function(response) {
@@ -27,6 +27,14 @@
       }
       $scope.categories = Array.from(categories);
     };
+
+    $scope.deleteRecipe = (recipe) => {
+      console.log(recipe + ' deleted');
+    }
+
+    $scope.goto = (path) => {
+      $location.path(path);
+    }
     
     init();
   })
@@ -38,6 +46,7 @@
 
       dataService.getID(id,function(response) {
         $scope.recipe = response.data;
+        $scope.title = response.data.name || 'Add New Recipe.';
       });
     }
 
@@ -50,6 +59,10 @@
         $scope.amount = ingredient.amount;
       }
     };
+
+    $scope.goto = (path) => {
+      $location.path(path);
+    }
 
     init();
 
