@@ -11,7 +11,6 @@
     }
 
     $scope.selectCategory = function(category) {
-      console.log(category);
       if (category === null) {
         init();
       } else {
@@ -27,9 +26,32 @@
         categories.add(item.category);
       }
       $scope.categories = Array.from(categories);
-      console.log('scope.categories', $scope.categories);
     };
     
     init();
+  })
+  .controller('RecipeDetailController', function($scope,dataService,$location) {
+    
+    const init = () => {
+      let id = $location.path();
+      id = id.slice(6);
+
+      dataService.getID(id,function(response) {
+        $scope.recipe = response.data;
+      });
+    }
+
+    $scope.ingredientDetails = function(ingredient) {
+      if (ingredient === null) {
+        $scope.condition = '';
+        $scope.amount = '';
+      } else {
+        $scope.condition = ingredient.condition;
+        $scope.amount = ingredient.amount;
+      }
+    };
+
+    init();
+
   });
 }());

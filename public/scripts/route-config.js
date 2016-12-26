@@ -15,7 +15,7 @@
     .module('app')
     .config(config);
 
-  function config($routeProvider) {
+  function config($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         controller: 'RecipesController',
@@ -35,5 +35,6 @@
       .otherwise({
         redirectTo: '/'
       });
+
   }
 })();

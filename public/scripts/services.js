@@ -39,14 +39,12 @@
         }).catch(function(e) {console.log(e)});
     };
 
-    this.getID = function (id) {
+    this.getID = function (id,callback) {
       $http.get('http://localhost:5000/api/recipes/' + id)
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
           console.log('something went wrong');
-        });
+        }).catch(function(e) {console.log(e)});
     };
 
     this.updateID = function (id,data) {
