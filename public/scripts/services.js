@@ -11,21 +11,17 @@
         });
     };
 
-    this.getAllCategories = function () {
+    this.getAllCategories = function (callback) {
       $http.get('http://localhost:5000/api/categories')
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
           console.log('something went wrong');
         });
     };
 
-    this.getAllFoodItems = function () {
+    this.getAllFoodItems = function (callback) {
       $http.get('http://localhost:5000/api/fooditems')
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
           console.log('something went wrong');
         });

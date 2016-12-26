@@ -48,6 +48,14 @@
         $scope.recipe = response.data;
         $scope.title = response.data.name || 'Add New Recipe.';
       });
+
+      dataService.getAllCategories(function (response) {
+        $scope.categories = response.data;
+      });
+
+      dataService.getAllFoodItems(function (response) {
+        $scope.foods = response.data;
+      });
     }
 
     $scope.ingredientDetails = function(ingredient) {

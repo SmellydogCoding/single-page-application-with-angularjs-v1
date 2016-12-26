@@ -75,8 +75,8 @@
       <!-- TODO Add directives to this select element to bind its value 
         to the recipe model's `category` property and to populate the list
         with the categories from the database. -->
-      <select>
-        <option value="">{{recipe.category}}</option>
+      <select ng-init="recipeCategories = recipe.category" ng-model="recipeCategories" ng-options="option.name for option in categories">
+        <option value=""></option>
       </select>
     </p>
   </div>
