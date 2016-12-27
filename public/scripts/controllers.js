@@ -43,14 +43,22 @@
     const init = () => {
       let id = $location.path();
       id = id.slice(6);
+      let category;
 
       dataService.getID(id,function(response) {
         $scope.recipe = response.data;
         $scope.title = response.data.name || 'Add New Recipe.';
+        category = response.data.category;
       });
 
       dataService.getAllCategories(function (response) {
         $scope.categories = response.data;
+        let index = response.data.findIndex(item => item.name === category);
+        if (index === -1) {
+          $scope.initial = {"name": "Choose a Category"};
+        } else {
+          $scope.initial = $scope.categories[index];
+        }
       });
 
       dataService.getAllFoodItems(function (response) {

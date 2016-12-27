@@ -75,8 +75,8 @@
       <!-- TODO Add directives to this select element to bind its value 
         to the recipe model's `category` property and to populate the list
         with the categories from the database. -->
-      <select ng-init="recipeCategories = recipe.category" ng-model="recipeCategories" ng-options="option.name for option in categories">
-        <option value=""></option>
+      <select ng-model="initial" ng-options="option.name for option in categories">
+        <option value="">Choose a Category</option>
       </select>
     </p>
   </div>
@@ -139,13 +139,13 @@
 
   <!-- TODO Add a directive to this div element so that it repeats 
     for each recipe ingredient to display. -->
-  <div class="ingredient-row">
+  <div class="ingredient-row" ng-repeat="item in recipe.ingredients">
     <div class="prefix-20 grid-30">
       <p>
         <!-- TODO Add directives to this select element to bind its value 
           to the recipe ingredient model's `foodItem` property and to 
           populate the list with the food items from the database. -->
-        <select ng-model="ingredients" ng-options="item.foodItem for item in recipe.ingredients" ng-change="ingredientDetails(ingredients)">
+        <select ng-model="item" ng-options="item.foodItem for item in recipe.ingredients" ng-change="ingredientDetails(ingredients)">
           <option value="">Select Item</option>
         </select>
       </p>
@@ -154,14 +154,14 @@
       <p>
         <!-- TODO Add a directive to this input element to bind its value 
           to the recipe ingredient model's `condition` property. -->
-        <input type="text" value="{{condition}}">
+        <input type="text" value="{{item.condition}}">
       </p>
     </div>
     <div class="grid-15">
       <p>
         <!-- TODO Add a directive to this input element to bind its value 
           to the recipe ingredient model's `amount` property. -->
-        <input type="text" value="{{amount}}">
+        <input type="text" value="{{item.amount}}">
       </p>
     </div>
     <div class="grid-5 pad-top">
