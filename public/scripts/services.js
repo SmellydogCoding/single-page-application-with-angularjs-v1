@@ -63,8 +63,8 @@
         });
     };
 
-    this.deleteRecipe = function (id,data) {
-      $http.delete('http://localhost:5000/api/recipes' + id, data)
+    this.deleteRecipe = function (id) {
+      $http.delete('http://localhost:5000/api/recipes/' + id)
       .then(function success(response) {
         return response.data;
       },

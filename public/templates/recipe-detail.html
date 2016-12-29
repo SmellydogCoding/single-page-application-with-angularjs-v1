@@ -10,7 +10,7 @@
       <!-- TODO Add directives to both the "Save Recipe" and "Cancel"
         buttons in order to handle user clicks. -->
       <button>Save Recipe</button>
-      <button class="secondary" ng-click="goto('/')">Cancel</button>
+      <button class="secondary" ng-click="cancelChanges()">Cancel</button>
     </div>
   </div>
 </div>
@@ -145,7 +145,7 @@
         <!-- TODO Add directives to this select element to bind its value 
           to the recipe ingredient model's `foodItem` property and to 
           populate the list with the food items from the database. -->
-        <select ng-model="item" ng-options="item.foodItem for item in recipe.ingredients" ng-change="ingredientDetails(ingredients)">
+        <select ng-model="foodDefault" ng-options="food.name for food in foods">
           <option value="">Select Item</option>
         </select>
       </p>
@@ -177,7 +177,7 @@
     <p>
       <!-- TODO Add a directive to this button in order to handle 
         when the user clicks to add a new recipe ingredient. -->
-      <button>+ Add Another Ingredient</button>
+      <button ng-click="addIngredient()">+ Add Another Ingredient</button>
     </p>
   </div>
 

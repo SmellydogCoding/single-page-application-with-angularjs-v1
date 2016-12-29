@@ -28,12 +28,17 @@
       $scope.categories = Array.from(categories);
     };
 
-    $scope.deleteRecipe = (recipe) => {
-      console.log(recipe + ' deleted');
-    }
+//    $scope.deleteRecipe = (recipe,$index) => {
+//      console.log(recipe._id);
+//      dataService.deleteRecipe(recipe._id,function(response){
+//      console.log(response);
+//      init();
+//    });
+//      $scope.recipes.splice($index,1);
+//    }
 
-    $scope.goto = (path) => {
-      $location.path(path);
+    $scope.addRecipe = () => {
+      $location.path('/add');
     }
     
     init();
@@ -44,6 +49,7 @@
       let id = $location.path();
       id = id.slice(6);
       let category;
+      console.log(id);
 
       dataService.getID(id,function(response) {
         $scope.recipe = response.data;
@@ -63,8 +69,15 @@
 
       dataService.getAllFoodItems(function (response) {
         $scope.foods = response.data;
+        $scope.foodDefault = $scope.foods[4];
       });
     }
+    
+    $scope.addIngredient = () => {
+//      console.log($scope.recipe);
+      let ingredient = '';
+      $scope.recipe.ingredients.push('');
+    };
 
     $scope.ingredientDetails = function(ingredient) {
       if (ingredient === null) {
@@ -76,8 +89,8 @@
       }
     };
 
-    $scope.goto = (path) => {
-      $location.path(path);
+    $scope.cancelChanges = () => {
+      $location.path('/');
     }
 
     init();
