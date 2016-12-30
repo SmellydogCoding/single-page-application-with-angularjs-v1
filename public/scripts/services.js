@@ -53,14 +53,12 @@
         });
     };
 
-    this.addRecipe = function (data) {
-      $http.put('http://localhost:5000/api/recipes', data)
-      .then(function success(response) {
-        return response.data;
-      },
+    this.addRecipe = function (data,callback) {
+      $http.post('http://localhost:5000/api/recipes', data)
+      .then(callback,
         function error(response) {
-          console.log('something went wrong');
-        });
+          console.log(response);
+        }).catch(function(e) {console.log(e)});
     };
 
     this.deleteRecipe = function (id) {

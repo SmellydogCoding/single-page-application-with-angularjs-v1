@@ -42,7 +42,7 @@
     <p>
       <!-- TODO Add a directive to this input element to bind its value 
         to the recipe model's `name` property. -->
-      <input type="text" value="{{recipe.name}}">
+      <input type="text" ng-model="recipe.name">
     </p>
   </div>
 </div>
@@ -58,7 +58,7 @@
     <p>
       <!-- TODO Add a directive to this textarea element to bind its content 
         to the recipe model's `description` property. -->
-      <textarea>{{recipe.description}}</textarea>
+      <textarea ng-model="recipe.description"></textarea>
     </p>
   </div>
 </div>
@@ -75,7 +75,7 @@
       <!-- TODO Add directives to this select element to bind its value 
         to the recipe model's `category` property and to populate the list
         with the categories from the database. -->
-      <select ng-model="initial" ng-options="option.name for option in categories">
+      <select ng-model="recipe.category" ng-options="option.name as option.name for option in categories">
         <option value="">Choose a Category</option>
       </select>
     </p>
@@ -93,7 +93,7 @@
     <p>
       <!-- TODO Add a directive to this input element to bind its value 
         to the recipe model's `prepTime` property. -->
-      <input type="number" value="{{recipe.prepTime}}">
+      <input type="number" ng-model="recipe.prepTime">
     </p>
   </div>
 </div>
@@ -109,7 +109,7 @@
     <p>
       <!-- TODO Add a directive to this input element to bind its value 
         to the recipe model's `cookTime` property. -->
-      <input type="number" value="{{recipe.cookTime}}">
+      <input type="number" ng-model="recipe.cookTime">
     </p>
   </div>
 </div>

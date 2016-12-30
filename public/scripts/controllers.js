@@ -46,20 +46,40 @@
   .controller('RecipeDetailController', function($scope,dataService,$location) {
     
     const init = () => {
-      let id = $location.path();
-      id = id.slice(6);
-      let category;
-      console.log(id);
-
-      dataService.getID(id,function(response) {
-        $scope.recipe = response.data;
-        $scope.title = response.data.name || 'Add New Recipe.';
-        category = response.data.category;
-      });
+      const path = $location.path();
+      if (path.includes("edit")) {
+        let id = path.slice(6);
+        dataService.getID(id,function(response) {
+          $scope.recipe = response.data;
+          $scope.title = response.data.name;
+          $scope.editCategory = response.data.category;
+        });
+      } else if (path.includes("add")) {
+        $scope.recipe = {
+          name: "",
+          description: "",
+          category: "",
+          prepTime: 0,
+          cookTime: 0,
+          ingredients: [
+            {
+              foodItem: "",
+              condition: "",
+              amount: ""
+            }
+          ],
+          steps: [
+            {
+              description: ""
+            }
+          ]
+        }
+        $scope.title = 'Add New Recipe.'
+      }
 
       dataService.getAllCategories(function (response) {
         $scope.categories = response.data;
-        let index = response.data.findIndex(item => item.name === category);
+        let index = response.data.findIndex(item => item.name === $scope.editCategory);
         if (index === -1) {
           $scope.initial = {"name": "Choose a Category"};
         } else {
@@ -89,18 +109,15 @@
       
     }
 
-    $scope.ingredientDetails = function(ingredient) {
-      if (ingredient === null) {
-        $scope.condition = '';
-        $scope.amount = '';
-      } else {
-        $scope.condition = ingredient.condition;
-        $scope.amount = ingredient.amount;
-      }
-    };
-
     $scope.saveChanges = (recipe) => {
       console.log(recipe);
+      dataService.addRecipe(recipe,function(response) {
+        if (response.message) {
+          console.log(response.message);
+        } else {
+          $location.path('/')
+        }
+      });
     }
 
     $scope.cancelChanges = () => {
