@@ -72,12 +72,21 @@
       });
     }
     
-    $scope.addIngredient = () => {
-      $scope.recipe.ingredients.push({amount: "amount", condition: "condition", foodItem: ""});
+    $scope.addItem = (item) => {
+      if (item === 'ingredient') {
+        $scope.recipe.ingredients.push({amount: "amount", condition: "condition", foodItem: ""});
+      } else if (item === 'step') {
+        $scope.recipe.steps.push({description: "description"});
+      }
     };
 
-    $scope.deleteIngredient = ($index) => {
-      $scope.recipe.ingredients.splice($index,1);
+    $scope.deleteItem = (item,$index) => {
+      if (item === 'ingredient') {
+        $scope.recipe.ingredients.splice($index,1);
+      } else if (item === 'step') {
+        $scope.recipe.steps.splice($index,1);
+      }
+      
     }
 
     $scope.ingredientDetails = function(ingredient) {
