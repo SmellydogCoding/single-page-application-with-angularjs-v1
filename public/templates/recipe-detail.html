@@ -9,7 +9,7 @@
     <div class="flush-right">
       <!-- TODO Add directives to both the "Save Recipe" and "Cancel"
         buttons in order to handle user clicks. -->
-      <button>Save Recipe</button>
+      <button ng-click="saveChanges(recipe)">Save Recipe</button>
       <button class="secondary" ng-click="cancelChanges()">Cancel</button>
     </div>
   </div>
@@ -145,7 +145,7 @@
         <!-- TODO Add directives to this select element to bind its value 
           to the recipe ingredient model's `foodItem` property and to 
           populate the list with the food items from the database. -->
-        <select ng-model="foodDefault" ng-options="food.name for food in foods">
+        <select ng-model="item.foodItem" ng-options="food.name as food.name for food in foods">
           <option value="">Select Item</option>
         </select>
       </p>
@@ -154,21 +154,21 @@
       <p>
         <!-- TODO Add a directive to this input element to bind its value 
           to the recipe ingredient model's `condition` property. -->
-        <input type="text" value="{{item.condition}}">
+        <input type="text" ng-model="item.condition">
       </p>
     </div>
     <div class="grid-15">
       <p>
         <!-- TODO Add a directive to this input element to bind its value 
           to the recipe ingredient model's `amount` property. -->
-        <input type="text" value="{{item.amount}}">
+        <input type="text" ng-model="item.amount">
       </p>
     </div>
     <div class="grid-5 pad-top">
       <p class="flush-right">
         <!-- TODO Add a directive to this anchor element so that you can 
           delete the recipe ingredient when the user clicks on the 'Delete' link. -->
-        <a class="no-action-link"> <img src="images/delete.svg" height="12px"> </a>
+        <a class="no-action-link" ng-click="deleteIngredient($index)"> <img src="images/delete.svg" height="12px"> </a>
       </p>
     </div>
   </div>

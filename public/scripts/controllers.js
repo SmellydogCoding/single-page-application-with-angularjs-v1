@@ -69,15 +69,16 @@
 
       dataService.getAllFoodItems(function (response) {
         $scope.foods = response.data;
-        $scope.foodDefault = $scope.foods[4];
       });
     }
     
     $scope.addIngredient = () => {
-//      console.log($scope.recipe);
-      let ingredient = '';
-      $scope.recipe.ingredients.push('');
+      $scope.recipe.ingredients.push({amount: "amount", condition: "condition", foodItem: ""});
     };
+
+    $scope.deleteIngredient = ($index) => {
+      $scope.recipe.ingredients.splice($index,1);
+    }
 
     $scope.ingredientDetails = function(ingredient) {
       if (ingredient === null) {
@@ -88,6 +89,10 @@
         $scope.amount = ingredient.amount;
       }
     };
+
+    $scope.saveChanges = (recipe) => {
+      console.log(recipe);
+    }
 
     $scope.cancelChanges = () => {
       $location.path('/');
