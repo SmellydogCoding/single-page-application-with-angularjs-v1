@@ -28,19 +28,20 @@
       $scope.categories = Array.from(categories);
     };
 
-//    $scope.deleteRecipe = (recipe,$index) => {
-//      console.log(recipe._id);
-//      dataService.deleteRecipe(recipe._id,function(response){
-//      console.log(response);
-//      init();
-//    });
-//      $scope.recipes.splice($index,1);
-//    }
-
     $scope.addRecipe = () => {
       $location.path('/add');
     }
     
+    $scope.deleteRecipe = (recipe,$index) => {
+      dataService.deleteRecipe(recipe._id,function(response) {
+        if (response.data === '') {
+          init();
+        } else {
+          console.log('something weird just happened:',response);
+        }
+      });
+    }
+
     init();
   })
   .controller('RecipeDetailController', function($scope,dataService,$location) {
@@ -110,13 +111,21 @@
     }
 
     $scope.saveChanges = (recipe) => {
-      console.log(recipe);
       dataService.addRecipe(recipe,function(response) {
-        if (response.message) {
-          console.log(response.message);
-        } else {
-          $location.path('/')
+        // redirect home
+      }, function(response) {
+        console.log(response);
+        $scope.errors = [];
+        const buildErrorArray = (errorArray) => {
+          for (let item of errorArray) {
+            $scope.errors.push(item.userMessage);
+          }
         }
+        if (response.data.errors.category) { buildErrorArray(response.data.errors.category) }
+        if (response.data.errors.ingredients) { buildErrorArray(response.data.errors.ingredients) }
+        if (response.data.errors.name) { buildErrorArray(response.data.errors.name) }
+        if (response.data.errors.steps) { buildErrorArray(response.data.errors.steps) }
+        console.log($scope.errors);
       });
     }
 

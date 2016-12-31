@@ -53,22 +53,17 @@
         });
     };
 
-    this.addRecipe = function (data,callback) {
+    this.addRecipe = function (data,success,error) {
       $http.post('http://localhost:5000/api/recipes', data)
-      .then(callback,
-        function error(response) {
-          console.log(response);
-        }).catch(function(e) {console.log(e)});
+      .then(success,error).catch(function(e) {console.log(e)});
     };
 
-    this.deleteRecipe = function (id) {
+    this.deleteRecipe = function (id,callback) {
       $http.delete('http://localhost:5000/api/recipes/' + id)
-      .then(function success(response) {
-        return response.data;
-      },
+      .then(callback,
         function error(response) {
-          console.log('something went wrong');
-        });
+          console.log('something went wrong:',response);
+        }).catch(function(e) {console.log(e)});
     };
   
   });
