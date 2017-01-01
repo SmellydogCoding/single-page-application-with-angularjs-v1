@@ -112,7 +112,7 @@
 
     $scope.saveChanges = (recipe) => {
       dataService.addRecipe(recipe,function(response) {
-        // redirect home
+        $location.path('/');
       }, function(response) {
         console.log(response);
         $scope.errors = [];
