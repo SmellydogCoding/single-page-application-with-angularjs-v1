@@ -4,13 +4,14 @@
   .controller('RecipesController', function(dataService,$location) {
     const vm = this;
     const init = () => {
+      vm.hidden = true;
       dataService.getAllRecipes(function(response) {
         vm.recipes = response.data;
         getCategories(response.data);
       });
     }
 
-    this.selectCategory = function(category) {
+    vm.selectCategory = function(category) {
       if (category === null) {
         init();
       } else {
@@ -33,13 +34,18 @@
     }
     
     vm.deleteRecipe = (recipe,$index) => {
-      dataService.deleteRecipe(recipe._id,function(response) {
-        if (response.data === '') {
-          init();
-        } else {
-          console.log('something weird just happened:',response);
-        }
-      });
+      vm.toDelete = recipe.name;
+      vm.hidden = false;
+      vm.deleteIt = () => {
+        vm.hidden = true;
+        dataService.deleteRecipe(recipe._id,function(response) {
+          if (response.data === '') {
+            init();
+          } else {
+            console.log('something weird just happened:',response);
+          }
+        });
+      }
     }
 
     init();

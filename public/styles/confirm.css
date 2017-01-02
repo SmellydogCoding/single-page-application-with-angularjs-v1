@@ -1,0 +1,36 @@
+.confirmWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.3);
+}
+
+.confirm {
+  background: #fff;
+  color: #676767;
+  border: 6px solid #808080;
+  padding-bottom: 1.0em;
+  text-align: center;
+  width: 24%;
+  position: fixed;
+  top: 40%;
+  left: 38%;
+}
+
+.confirm p {
+  padding: 0 1.0em;
+}
+
+.confirm button {
+  margin-top: 1.0em;
+}
+
+.confirm button:first-of-type {
+  margin-right: 3.0em;
+}
+
+.confirm button:last-of-type {
+  margin-left: 3.0em;
+}
