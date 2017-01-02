@@ -4,7 +4,7 @@
       populate the list with the categories from the database.
       You'll also need to add directives to handle when the user 
       selects a new category so that you can refresh the recipes list. -->
-    <select ng-model="recipeCategories" ng-options="option for option in categories">
+    <select ng-model="recipeCategories" ng-options="option for option in categories" ng-change="selectCategory(recipeCategories)">
       <option value="" selected>All Categories</option>
     </select>
   </div>

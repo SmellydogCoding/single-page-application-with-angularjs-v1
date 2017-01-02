@@ -4,7 +4,7 @@
   .controller('RecipesController', function($scope,dataService,$location) {
     
     const init = () => {
-      dataService.getAll(function(response) {
+      dataService.getAllRecipes(function(response) {
         $scope.recipes = response.data;
         getCategories(response.data);
       });
@@ -77,7 +77,7 @@
         }
         $scope.title = 'Add New Recipe.'
       }
-
+      
       dataService.getAllCategories(function (response) {
         $scope.categories = response.data;
         let index = response.data.findIndex(item => item.name === $scope.editCategory);
@@ -111,22 +111,36 @@
     }
 
     $scope.saveChanges = (recipe) => {
-      dataService.addRecipe(recipe,function(response) {
-        $location.path('/');
-      }, function(response) {
-        console.log(response);
-        $scope.errors = [];
-        const buildErrorArray = (errorArray) => {
-          for (let item of errorArray) {
-            $scope.errors.push(item.userMessage);
-          }
+
+      $scope.errors = [];
+
+      const buildErrorArray = (errorArray) => {
+        for (let item of errorArray) {
+          $scope.errors.push(item.userMessage);
         }
+      }
+
+      const collectErrors = (response) => {
         if (response.data.errors.category) { buildErrorArray(response.data.errors.category) }
         if (response.data.errors.ingredients) { buildErrorArray(response.data.errors.ingredients) }
         if (response.data.errors.name) { buildErrorArray(response.data.errors.name) }
         if (response.data.errors.steps) { buildErrorArray(response.data.errors.steps) }
-        console.log($scope.errors);
-      });
+      }
+
+      if (recipe._id) {
+        dataService.updateID(recipe,function(response) {
+          $location.path('/');
+          }, function(response) {
+            collectErrors(response)
+        });
+      } else {
+        dataService.addRecipe(recipe,function(response) {
+          $location.path('/');
+          }, function(response) {
+            collectErrors(response)
+        });
+      }
+      
     }
 
     $scope.cancelChanges = () => {

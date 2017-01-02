@@ -3,7 +3,7 @@
   angular.module('app')
   .service('dataService', function($http) {
     
-    this.getAll = function (callback) {
+    this.getAllRecipes = function (callback) {
       $http.get('http://localhost:5000/api/recipes')
       .then(callback,
         function error(response) {
@@ -43,14 +43,9 @@
         }).catch(function(e) {console.log(e)});
     };
 
-    this.updateID = function (id,data) {
-      $http.put('http://localhost:5000/api/recipes/' + id, data)
-      .then(function success(response) {
-        return response.data;
-      },
-        function error(response) {
-          console.log('something went wrong');
-        });
+    this.updateID = function (data,success,error) {
+      $http.put('http://localhost:5000/api/recipes/' + data._id, data)
+      .then(success,error).catch(function(e) {console.log(e)});
     };
 
     this.addRecipe = function (data,success,error) {
