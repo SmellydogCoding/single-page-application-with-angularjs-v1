@@ -1,21 +1,21 @@
 (function() {
   'use strict';
   angular.module('app')
-  .controller('RecipesController', function($scope,dataService,$location) {
-    
+  .controller('RecipesController', function(dataService,$location) {
+    const vm = this;
     const init = () => {
       dataService.getAllRecipes(function(response) {
-        $scope.recipes = response.data;
+        vm.recipes = response.data;
         getCategories(response.data);
       });
     }
 
-    $scope.selectCategory = function(category) {
+    this.selectCategory = function(category) {
       if (category === null) {
         init();
       } else {
         dataService.getCategory(category,function(response) {
-          $scope.recipes = response.data;
+          vm.recipes = response.data;
         });
       }
     };
@@ -25,14 +25,14 @@
       for (let item of data) {
         categories.add(item.category);
       }
-      $scope.categories = Array.from(categories);
+      vm.categories = Array.from(categories);
     };
 
-    $scope.addRecipe = () => {
+    vm.addRecipe = () => {
       $location.path('/add');
     }
     
-    $scope.deleteRecipe = (recipe,$index) => {
+    vm.deleteRecipe = (recipe,$index) => {
       dataService.deleteRecipe(recipe._id,function(response) {
         if (response.data === '') {
           init();
@@ -45,18 +45,18 @@
     init();
   })
   .controller('RecipeDetailController', function($scope,dataService,$location) {
-    
+    const vm = this;
     const init = () => {
       const path = $location.path();
       if (path.includes("edit")) {
         let id = path.slice(6);
         dataService.getID(id,function(response) {
-          $scope.recipe = response.data;
-          $scope.title = response.data.name;
-          $scope.editCategory = response.data.category;
+          vm.recipe = response.data;
+          vm.title = response.data.name;
+          vm.editCategory = response.data.category;
         });
       } else if (path.includes("add")) {
-        $scope.recipe = {
+        vm.recipe = {
           name: "",
           description: "",
           category: "",
@@ -75,48 +75,48 @@
             }
           ]
         }
-        $scope.title = 'Add New Recipe.'
+        vm.title = 'Add New Recipe.'
       }
       
       dataService.getAllCategories(function (response) {
-        $scope.categories = response.data;
+        vm.categories = response.data;
         let index = response.data.findIndex(item => item.name === $scope.editCategory);
         if (index === -1) {
-          $scope.initial = {"name": "Choose a Category"};
+          vm.initial = {"name": "Choose a Category"};
         } else {
-          $scope.initial = $scope.categories[index];
+          vm.initial = $scope.categories[index];
         }
       });
 
       dataService.getAllFoodItems(function (response) {
-        $scope.foods = response.data;
+        vm.foods = response.data;
       });
     }
     
-    $scope.addItem = (item) => {
+    vm.addItem = (item) => {
       if (item === 'ingredient') {
-        $scope.recipe.ingredients.push({amount: "amount", condition: "condition", foodItem: ""});
+        vm.recipe.ingredients.push({amount: "amount", condition: "condition", foodItem: ""});
       } else if (item === 'step') {
-        $scope.recipe.steps.push({description: "description"});
+        vm.recipe.steps.push({description: "description"});
       }
     };
 
-    $scope.deleteItem = (item,$index) => {
+    vm.deleteItem = (item,$index) => {
       if (item === 'ingredient') {
-        $scope.recipe.ingredients.splice($index,1);
+        vm.recipe.ingredients.splice($index,1);
       } else if (item === 'step') {
-        $scope.recipe.steps.splice($index,1);
+        vm.recipe.steps.splice($index,1);
       }
       
     }
 
-    $scope.saveChanges = (recipe) => {
+    vm.saveChanges = (recipe) => {
 
-      $scope.errors = [];
+      vm.errors = [];
 
       const buildErrorArray = (errorArray) => {
         for (let item of errorArray) {
-          $scope.errors.push(item.userMessage);
+          vm.errors.push(item.userMessage);
         }
       }
 
@@ -143,7 +143,7 @@
       
     }
 
-    $scope.cancelChanges = () => {
+    vm.cancelChanges = () => {
       $location.path('/');
     }
 

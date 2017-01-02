@@ -4,7 +4,7 @@
       populate the list with the categories from the database.
       You'll also need to add directives to handle when the user 
       selects a new category so that you can refresh the recipes list. -->
-    <select ng-model="recipeCategories" ng-options="option for option in categories" ng-change="selectCategory(recipeCategories)">
+    <select ng-model="recipeCategories" ng-options="option for option in vm.categories" ng-change="vm.selectCategory(recipeCategories)">
       <option value="" selected>All Categories</option>
     </select>
   </div>
@@ -12,7 +12,7 @@
     <div class="flush-right">
       <!-- TODO Add a directive to this button in order to handle 
         when the user clicks to add a new recipe. -->
-      <button ng-click="addRecipe()">+ Add Recipe</button>
+      <button ng-click="vm.addRecipe()">+ Add Recipe</button>
     </div>
   </div>
 </div>
@@ -20,7 +20,7 @@
 
 <!-- TODO Add a directive to this div element so that it only displays
   when there are no recipes to display. -->
-<div class="grid-100 row" ng-hide="recipes">
+<div class="grid-100 row" ng-hide="vm.recipes">
   <div class="grid-70">
     <p>No recipes found!</p>
   </div>
@@ -29,7 +29,7 @@
 <!-- TODO Add a directive to this div element so that it repeats 
   for each recipe to display. Also, add a directive to this div element 
   so that it only displays when there are recipes to display. -->
-<div class="grid-100 row addHover" ng-repeat="recipe in recipes" ng-show="recipes">
+<div class="grid-100 row addHover" ng-repeat="recipe in vm.recipes" ng-show="vm.recipes">
   <!-- TODO Replace this anchor element's href attribute with a 
     directive so that you can route the user to the Recipe Detail 
     screen when they click on a row. -->
@@ -52,7 +52,7 @@
           <a href="#!/edit/{{recipe._id}}"> <img src="images/edit.svg" height="12px"> Edit </a>
           <!-- TODO Add a directive to this anchor element so that you can 
             delete the recipe when the user clicks on the 'Delete' link. -->
-          <a class="no-action-link" ng-click="deleteRecipe(recipe, $index)"> <img src="images/delete.svg" height="12px"> Delete </a>
+          <a class="no-action-link" ng-click="vm.deleteRecipe(recipe, $index)"> <img src="images/delete.svg" height="12px"> Delete </a>
         </p>
       </div>
     </div>
