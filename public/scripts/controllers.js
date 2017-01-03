@@ -11,7 +11,7 @@
       });
     }
 
-    vm.selectCategory = function(category) {
+    vm.selectCategory = (category) => {
       if (category === null) {
         init();
       } else {
@@ -39,11 +39,7 @@
       vm.deleteIt = () => {
         vm.hidden = true;
         dataService.deleteRecipe(recipe._id,function(response) {
-          if (response.data === '') {
-            init();
-          } else {
-            console.log('something weird just happened:',response);
-          }
+          init();
         });
       }
     }

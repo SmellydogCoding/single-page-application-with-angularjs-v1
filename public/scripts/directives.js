@@ -5,5 +5,10 @@
     return {
       templateUrl: 'templates/confirm.html'
     };
+  })
+  .directive('errors', function() {
+    return {
+      templateUrl: 'templates/errors.html'
+    };
   });
 }());

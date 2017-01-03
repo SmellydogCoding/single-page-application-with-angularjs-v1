@@ -1,65 +1,53 @@
 (function() {
   'use strict';
   angular.module('app')
-  .service('dataService', function($http) {
+  .service('dataService', function($http,errors,httpErrors) {
     
     this.getAllRecipes = function (callback) {
       $http.get('http://localhost:5000/api/recipes')
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong');
-        });
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
 
     this.getAllCategories = function (callback) {
       $http.get('http://localhost:5000/api/categories')
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong');
-        });
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
 
     this.getAllFoodItems = function (callback) {
       $http.get('http://localhost:5000/api/fooditems')
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong');
-        });
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
 
     this.getCategory = function(category,callback) {
       $http.get('http://localhost:5000/api/recipes?category=' + category)
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong');
-        }).catch(function(e) {console.log(e)});
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
 
     this.getID = function (id,callback) {
       $http.get('http://localhost:5000/api/recipes/' + id)
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong');
-        }).catch(function(e) {console.log(e)});
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
 
     this.updateID = function (data,success,error) {
       $http.put('http://localhost:5000/api/recipes/' + data._id, data)
-      .then(success,error).catch(function(e) {console.log(e)});
+      .then(success,error).catch(errors.catch());
     };
 
     this.addRecipe = function (data,success,error) {
       $http.post('http://localhost:5000/api/recipes', data)
-      .then(success,error).catch(function(e) {console.log(e)});
+      .then(success,error).catch(errors.catch());
     };
 
     this.deleteRecipe = function (id,callback) {
       $http.delete('http://localhost:5000/api/recipes/' + id)
-      .then(callback,
-        function error(response) {
-          console.log('something went wrong:',response);
-        }).catch(function(e) {console.log(e)});
+      .then(callback,httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     };
-  
+    
   });
 }());
