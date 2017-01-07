@@ -3,17 +3,18 @@
   angular.module('app')
   .controller('RecipesController', function(dataService,$location) {
     const vm = this;
-    const init = () => {
+    
+    vm.init = () => {
       vm.hidden = true;
       dataService.getAllRecipes(function(response) {
         vm.recipes = response.data;
-        getCategories(response.data);
+        vm.getCategories(response.data);
       });
     }
 
     vm.selectCategory = (category) => {
       if (category === null) {
-        init();
+        vm.init();
       } else {
         dataService.getCategory(category,function(response) {
           vm.recipes = response.data;
@@ -21,7 +22,7 @@
       }
     };
     
-    const getCategories = (data) => {
+    vm.getCategories = (data) => {
       let categories = new Set();
       for (let item of data) {
         categories.add(item.category);
@@ -39,12 +40,12 @@
       vm.deleteIt = () => {
         vm.hidden = true;
         dataService.deleteRecipe(recipe._id,function(response) {
-          init();
+          vm.init();
         });
       }
     }
 
-    init();
+    vm.init();
   })
   .controller('RecipeDetailController', function($scope,dataService,$location) {
     const vm = this;
