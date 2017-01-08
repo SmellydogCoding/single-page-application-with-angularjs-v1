@@ -1,38 +1,44 @@
-//
-// test/unit/controllers/controllersSpec.js
-//
-describe("Unit: Testing Controllers", function() {
+describe("Unit Testing Controllers", function() {
 
   beforeEach(angular.mock.module('app'));
   
-  let controller1;
-  let controller2;
-  let scope;
+  let $scope;
+  let getAllRecipesMock;
   
-  
-  beforeEach(inject(function(_$controller_) {
-    // The injector unwraps the underscores (_) from around the parameter names when matching
+  beforeEach(inject(function(_$controller_,_$rootScope_,$q) {
     $controller = _$controller_;
+    $scope = _$rootScope_.$new();
+    
+    getAllRecipesMock = {
+      getAllRecipes: function() {
+        var deferred = $q.defer();
+        deferred.resolve([{name: "recipename"}]);
+        return deferred.promise;
+      }            
+    }
   }));
   
-  it('has a test to test the test', function() {
+  it('has a test to test that tests are testing', function() {
     expect(2 + 2).toEqual(4);
   });
 
   it('should have a RecipesController', function() {
-    let $scope = {};
     const controller = $controller('RecipesController',{$scope:$scope});
     expect(controller).toBeDefined();
   });
 
   it('should have a RecipeDetailController', function() {
-    let $scope = {};
     const controller = $controller('RecipeDetailController',{$scope:$scope});
     expect(controller).toBeDefined();
   });
+
+  it('should call the getAllRecipes service and return response', inject(function() {
+    const controller = $controller('RecipesController',{$scope:$scope,dataService:getAllRecipesMock});
+    $scope.$digest();
+    expect(controller.recipes).toBe([{name: "recipename"}]);
+  }));
   
   it('should remove duplicate categories', function() {
-    let $scope = {};
     const controller = $controller('RecipesController',{$scope:$scope});
     let data = [{'category':'dog'},{'category':'cat'},{'category':'horse'},{'category':'dog'},{'category':'cow'}];
     controller.getCategories(data);
@@ -40,7 +46,6 @@ describe("Unit: Testing Controllers", function() {
   });
   
   it('should take you to the /add route when the addRecipe method is called', inject(function($location) {
-    let $scope = {};
     const controller = $controller('RecipesController',{$scope:$scope});
     controller.addRecipe();
     expect($location.path()).toEqual('/add');
