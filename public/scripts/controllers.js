@@ -1,15 +1,17 @@
 (function() {
   'use strict';
   angular.module('app')
-  .controller('RecipesController', function(dataService,$location) {
+  .controller('RecipesController', function(dataService,$location,errors,httpErrors) {
     const vm = this;
     
     vm.init = () => {
       vm.hidden = true;
-      dataService.getAllRecipes(function(response) {
+      let allRecipes = dataService.getAllRecipes();
+      allRecipes.then(function(response) {
         vm.recipes = response.data;
         vm.getCategories(response.data);
-      });
+      },httpErrors.display('HTTP Error'))
+      .catch(errors.catch());
     }
 
     vm.selectCategory = (category) => {

@@ -35,7 +35,7 @@ describe("Unit Testing Controllers", function() {
   it('should call the getAllRecipes service and return response', inject(function() {
     const controller = $controller('RecipesController',{$scope:$scope,dataService:getAllRecipesMock});
     $scope.$digest();
-    expect(controller.recipes).toBe([{name: "recipename"}]);
+    expect(controller.recipes).toEqual([{name: "recipename"}]);
   }));
   
   it('should remove duplicate categories', function() {

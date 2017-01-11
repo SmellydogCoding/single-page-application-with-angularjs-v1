@@ -3,10 +3,8 @@
   angular.module('app')
   .service('dataService', function($http,errors,httpErrors) {
     
-    this.getAllRecipes = function (callback) {
-      $http.get('http://localhost:5000/api/recipes')
-      .then(callback,httpErrors.display('HTTP Error'))
-      .catch(errors.catch());
+    this.getAllRecipes = function () {
+     return $http.get('http://localhost:5000/api/recipes');
     };
 
     this.getAllCategories = function (callback) {

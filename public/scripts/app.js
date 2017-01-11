@@ -21,6 +21,8 @@
       display: function(message) {
         return function(reason) {
           $rootScope.addError({message: 'Something went Wrong! (HTTP Error)', reason: reason});
+          console.log(reason);
+          console.log(message);
         };
       }
     };
