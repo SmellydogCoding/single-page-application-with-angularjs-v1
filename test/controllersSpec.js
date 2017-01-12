@@ -4,18 +4,34 @@ describe("Unit Testing Controllers", function() {
   
   let $scope;
   let getAllRecipesMock;
+  let getAllInACategoryMock;
   
   beforeEach(inject(function(_$controller_,_$rootScope_,$q) {
     $controller = _$controller_;
     $scope = _$rootScope_.$new();
     
     getAllRecipesMock = {
-      getAllRecipes: function() {
+      getAllRecipes: function(callback) {
+        let response = {
+          data: [{name: "all the recipes"}]
+        };
         var deferred = $q.defer();
-        deferred.resolve([{name: "recipename"}]);
+        deferred.resolve(response);
         return deferred.promise;
       }            
     }
+
+    deleteRecipesMock = {
+      deleteRecipes: function(callback) {
+        let response = {
+          data: [{name: "recipe deleted"}]
+        };
+        var deferred = $q.defer();
+        deferred.resolve(response);
+        return deferred.promise;
+      }            
+    }
+
   }));
   
   it('has a test to test that tests are testing', function() {
@@ -32,10 +48,10 @@ describe("Unit Testing Controllers", function() {
     expect(controller).toBeDefined();
   });
 
-  it('should call the getAllRecipes service and return response', inject(function() {
+  it('should call the getAllRecipes service and return all the recipes', inject(function() {
     const controller = $controller('RecipesController',{$scope:$scope,dataService:getAllRecipesMock});
     $scope.$digest();
-    expect(controller.recipes).toEqual([{name: "recipename"}]);
+    expect(controller.recipes).toEqual([{name: "all the recipes"}]);
   }));
   
   it('should remove duplicate categories', function() {

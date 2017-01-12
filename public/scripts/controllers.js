@@ -18,11 +18,13 @@
       if (category === null) {
         vm.init();
       } else {
-        dataService.getCategory(category,function(response) {
+        let allRecipesInACategory = dataService.getCategory(category);
+        allRecipesInACategory.then(function(response) {
           vm.recipes = response.data;
-        });
+        },httpErrors.display('HTTP Error'))
+        .catch(errors.catch());
       }
-    };
+    }
     
     vm.getCategories = (data) => {
       let categories = new Set();
@@ -41,25 +43,29 @@
       vm.hidden = false;
       vm.deleteIt = () => {
         vm.hidden = true;
-        dataService.deleteRecipe(recipe._id,function(response) {
+        let deleteARecipe = dataService.deleteRecipe(recipe._id);
+        deleteARecipe.then(function(response) {
           vm.init();
-        });
+        },httpErrors.display('HTTP Error'))
+        .catch(errors.catch());  
       }
     }
 
     vm.init();
   })
-  .controller('RecipeDetailController', function($scope,dataService,$location) {
+  .controller('RecipeDetailController', function($scope,dataService,$location,errors,httpErrors) {
     const vm = this;
     const init = () => {
       const path = $location.path();
       if (path.includes("edit")) {
         let id = path.slice(6);
-        dataService.getID(id,function(response) {
+        let getRecipeByID = dataService.getID(id);
+        getRecipeByID.then(function(response) {
           vm.recipe = response.data;
           vm.title = response.data.name;
           vm.editCategory = response.data.category;
-        });
+        },httpErrors.display('HTTP Error'))
+        .catch(errors.catch());
       } else if (path.includes("add")) {
         vm.recipe = {
           name: "",
@@ -83,7 +89,8 @@
         vm.title = 'Add New Recipe.'
       }
       
-      dataService.getAllCategories(function (response) {
+      let getAllTheCategories = dataService.getAllCategories();
+      getAllTheCategories.then(function(response) {
         vm.categories = response.data;
         let index = response.data.findIndex(item => item.name === $scope.editCategory);
         if (index === -1) {
@@ -91,11 +98,15 @@
         } else {
           vm.initial = $scope.categories[index];
         }
-      });
+      },httpErrors.display('HTTP Error'))
+        .catch(errors.catch());
+        
 
-      dataService.getAllFoodItems(function (response) {
+      let getAllTheFoods = dataService.getAllFoodItems();
+      getAllTheFoods.then(function(response) {
         vm.foods = response.data;
-      });
+      },httpErrors.display('HTTP Error'))
+        .catch(errors.catch());
     }
     
     vm.addItem = (item) => {
