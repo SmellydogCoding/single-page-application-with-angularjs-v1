@@ -144,17 +144,19 @@
       }
 
       if (recipe._id) {
-        dataService.updateID(recipe,function(response) {
+        let updateRecipe = dataService.updateID(recipe);
+        updateRecipe.then(function(response) {
           $location.path('/');
           }, function(response) {
             collectErrors(response)
-        });
+        }).catch(errors.catch());
       } else {
-        dataService.addRecipe(recipe,function(response) {
+        let addNewRecipe = dataService.addRecipe(recipe);
+        addNewRecipe.then(function(response) {
           $location.path('/');
           }, function(response) {
             collectErrors(response)
-        });
+        }).catch(errors.catch());
       }
       
     }
