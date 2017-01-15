@@ -7,6 +7,13 @@
       console.log($rootScope.errorMessage);
     }
   })
+  /**
+   * Take errors from the controllers and pass them to the default error handler
+   * @memberof app
+   * @ngdoc factory
+   * @name errors
+   * @param $rootScope {service} $rootScope
+   */
   .factory("errors", function($rootScope) {
     return {
       catch: function(message){
@@ -16,6 +23,13 @@
       }
     };
   })
+  /**
+   * Take http errors from the controllers and pass them to the default error handler
+   * @memberof app
+   * @ngdoc factory
+   * @name httpErrors
+   * @param $rootScope {service} $rootScope
+   */
   .factory("httpErrors", function($rootScope) {
     return {
       display: function(message) {
@@ -27,6 +41,11 @@
       }
     };
   })
+  /**
+   * Takes custom error messages and injects them into the default error handler
+   * @memberof app
+   * @ngdoc config
+   */
   .config(function($provide){
     $provide.decorator("$exceptionHandler", function($delegate, $injector){
       return function(exception, cause){

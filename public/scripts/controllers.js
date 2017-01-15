@@ -13,7 +13,8 @@
   .controller('RecipesController', function(dataService,$location,errors,httpErrors) {
     
     /**
-     * @this _set vm to this for using controller as vm
+     * @memberof RecipeController
+     * @attr {expression} controllerAs vm
      */
     const vm = this;
    
@@ -30,12 +31,16 @@
      * 
      * @memberof RecipeController
      * @function init
-     * @returns {promise} object containing all recipes
      * @scope recipe
      */
     vm.init = () => {
       
       vm.hidden = true;
+    /**
+     * @memberof RecipeController
+     * @function getAllRecipes
+     * @returns {promise} object containing all recipes
+     */
       let allRecipes = dataService.getAllRecipes();
       allRecipes.then(function(response) {
         vm.recipes = response.data;
@@ -53,13 +58,17 @@
      * 
      * @memberof RecipeController
      * @function selectCategory
-     * @param {string} category category choosen by user on the recipe page
-     * @returns {promise} object containing all recipes in the specified category
      */
     vm.selectCategory = (category) => {
       if (category === null) {
         vm.init();
       } else {
+     /**
+     * @memberof RecipeController
+     * @function getCategory
+     * @param {string} category category choosen by user on the recipe page
+     * @returns {promise} object containing all recipes in the specified category
+     */
         let allRecipesInACategory = dataService.getCategory(category);
         allRecipesInACategory.then(function(response) {
           vm.recipes = response.data;
