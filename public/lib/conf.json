@@ -1,0 +1,31 @@
+{
+  "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+  },
+  "plugins": [
+    "node_modules/jsdoc/plugins/markdown",
+    "node_modules/angular-jsdoc/common/plugins/ngdoc"
+  ],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "staticFiles": {
+        "include": [
+            "public/templates/confirm.html",
+            "public/templates/errors.html"
+        ]
+      }
+    }
+  },
+  "source": {
+    "include": [ "public/scripts/controllers.js","public/scripts/directives.js","public/scripts/services.js","public/scripts/app.js" ]
+  },
+  "opts": {
+    "template": "node_modules/angular-jsdoc/angular-template",
+    "encoding": "utf8",
+    "destination": "jsdoc",
+    "readme": "readme.md"
+  }
+}

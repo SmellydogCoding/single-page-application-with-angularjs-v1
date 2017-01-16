@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon ./src/index.js localhost 5000",
-    "db": "node ./src/api/data/seed.js"
+    "db": "node ./src/api/data/seed.js",
+    "jsdoc": "jsdoc -c public/lib/conf.json"
   },
   "author": "Treehouse Island, Inc.",
   "license": "ISC",
