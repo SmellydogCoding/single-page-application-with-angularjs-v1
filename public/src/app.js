@@ -1,13 +1,11 @@
-'use strict';
-
-(function () {
+(function() {
   'use strict';
-  
-  angular.module('app', ['ngRoute']).run(function ($rootScope) {
-    $rootScope.addError = function (message) {
+  angular.module('app', ['ngRoute'])
+  .run(function($rootScope) {
+    $rootScope.addError = (message) => {
       $rootScope.errorMessage = message;
       console.log($rootScope.errorMessage);
-    };
+    }
   })
   /**
    * Take errors from the controllers and pass them to the default error handler
@@ -16,11 +14,11 @@
    * @name errors
    * @param $rootScope {service} $rootScope
    */
-  .factory("errors", function ($rootScope) {
+  .factory("errors", function($rootScope) {
     return {
-      catch: function _catch(message) {
-        return function (reason) {
-          $rootScope.addError({ message: 'Something Went Wrong!', reason: reason });
+      catch: function(message){
+        return function(reason){
+          $rootScope.addError({message: 'Something Went Wrong!', reason: reason});
         };
       }
     };
@@ -32,11 +30,11 @@
    * @name httpErrors
    * @param $rootScope {service} $rootScope
    */
-  .factory("httpErrors", function ($rootScope) {
+  .factory("httpErrors", function($rootScope) {
     return {
-      display: function display(message) {
-        return function (reason) {
-          $rootScope.addError({ message: 'Something went Wrong! (HTTP Error)', reason: reason });
+      display: function(message) {
+        return function(reason) {
+          $rootScope.addError({message: 'Something went Wrong! (HTTP Error)', reason: reason});
           console.log(reason);
           console.log(message);
         };
@@ -48,13 +46,13 @@
    * @memberof app
    * @ngdoc config
    */
-  .config(function ($provide) {
-    $provide.decorator("$exceptionHandler", function ($delegate, $injector) {
-      return function (exception, cause) {
+  .config(function($provide){
+    $provide.decorator("$exceptionHandler", function($delegate, $injector){
+      return function(exception, cause){
         var $rootScope = $injector.get("$rootScope");
-        $rootScope.addError({ message: "Exception", reason: exception });
+        $rootScope.addError({message:"Exception", reason:exception});
         $delegate(exception, cause);
       };
     });
   });
-})();
+}());

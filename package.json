@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon ./src/index.js localhost 5000",
     "db": "node ./src/api/data/seed.js",
-    "jsdoc": "jsdoc -c public/lib/conf.json"
+    "jsdoc": "jsdoc -c public/lib/conf.json",
+    "build": "babel public/src -d public/scripts"
   },
   "author": "Treehouse Island, Inc.",
   "license": "ISC",
@@ -23,6 +24,9 @@
     "angular-jsdoc": "^1.5.0",
     "angular-mocks": "^1.6.1",
     "angular-ui-router": "^0.3.2",
+    "babel-cli": "^6.18.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
     "jasmine-core": "^2.5.2",
     "jsdoc": "^3.4.3",
