@@ -46,14 +46,16 @@
   <div class="hoverBlock">
     <div class="grid-30">
       <div class="flush-right">
-        <p>
+        <p class="msedge-min-width-fix">
           <!-- TODO Replace this anchor element's href attribute with a 
             directive so that you can route the user to the Recipe Detail 
             screen when they click on the 'Edit' link. -->
           <a href="#!/edit/{{recipe._id}}"> <img src="images/edit.svg" height="12px"> Edit </a>
           <!-- TODO Add a directive to this anchor element so that you can 
             delete the recipe when the user clicks on the 'Delete' link. -->
-          <a class="no-action-link" ng-click="vm.deleteRecipe(recipe, $index)"> <img src="images/delete.svg" height="12px"> Delete </a>
+          <a class="no-action-link msedge-line-break-fix" ng-click="vm.deleteRecipe(recipe, $index)"> <img src="images/delete.svg" height="12px">
+            <span>Delete</span>
+          </a>
         </p>
       </div>
     </div>

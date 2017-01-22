@@ -106,3 +106,24 @@ button {
 .pad-top {
   padding-top: 10px;
 }
+
+/* Keeps additional ingredient item, condition, and amount boxes lined up.
+Before the fix, when there was more than one ingredient, the name select
+box for ingredient #2+ would float right and the condition and and amount
+boxes would break to the next line in Internet Explorer 11 */
+
+.ingredient-item-ie11 {
+  clear: both;
+}
+
+/* Keeps edit and delete buttons and text for each recipe aligned togeather.
+Before the fix, 'Delete' would break to the next line in MS Edge. */
+
+.msedge-min-width-fix {
+  min-width: 8.0em;
+}
+
+.msedge-line-break-fix {
+  display: inline-block;
+  margin-right: 0.25em;
+}
